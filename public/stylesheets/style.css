@@ -58,3 +58,29 @@ nav a.current, nav a:hover {
   background: #83cd29;
   color: #000
 }
+
+.meta {
+  padding: 7px;
+  border: 1px solid #ccc;
+  background: #ccc;
+  margin-bottom: 10px;
+}
+
+a.more{
+  display: block;
+  width: 80px;
+  background: #404137;
+  color: #fff;
+  margin-top:  30px;
+  text-decoration: none;
+}
+
+.post {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+
+.post h1 a {
+  color: #666666;
+  text-decoration: none;
+}
