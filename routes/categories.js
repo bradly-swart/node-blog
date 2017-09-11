@@ -27,7 +27,7 @@ router.post('/add', function(req, res, next) {
       if(err){
         res.send(err)
       }else{
-        req.flash('success', 'Post added')
+        req.flash('success', 'category added')
         res.location('/')
         res.redirect('/')
       }
