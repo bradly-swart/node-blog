@@ -27,3 +27,6 @@ block content
         option(value="Brad") Brad
         option(value="Annon") Annon
     input.btn.btn-default(name='submit', value='Save', type='submit')
+    script(src="/ckeditor/ckeditor.js")
+    script
+      | CKEDITOR.replace('body')
