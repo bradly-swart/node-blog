@@ -8,7 +8,10 @@ var db = require('monk')('localhost/nodeblog')
 
 /* GET posts */
 router.get('/add', function(req, res, next) {
-  res.render('posts/add', {title: "Add Post"})
+  var categories = db.get('categories')
+  categories.find({}, {}, function(err, categories){
+    res.render('posts/add', {title: "Add Post", categories: categories})
+  })
 });
 
 router.post('/add', upload.single('image'), function(req, res, next) {
