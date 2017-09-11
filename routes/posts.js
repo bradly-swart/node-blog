@@ -12,11 +12,11 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', upload.single('image'), function(req, res, next) {
-  var title = req.body.title
+  var title    = req.body.title
   var category = req.body.category
-  var body = req.body.body
-  var author = req.body.author
-  var date = new Date()
+  var body     = req.body.body
+  var author   = req.body.author
+  var date     = new Date()
   
   if(req.file){
     var image = req.file.filename
@@ -25,16 +25,16 @@ router.post('/add', upload.single('image'), function(req, res, next) {
   }
 
   // Form field validation
-  req.checkBody('title', 'Enter a title.').isEmpty()
+  req.checkBody('title', 'Enter a title.').notEmpty()
 
   var errors = req.validationErrors()
-  if(erros){
+  if(errors){
     res.render('posts/add', {
       "errors": errors
     })
   }else{
     var posts = db.get('posts')
-    post.insert({
+    posts.insert({
       'title': title,
       'category': category,
       'body': body,
@@ -52,7 +52,6 @@ router.post('/add', upload.single('image'), function(req, res, next) {
 
     })
   }
-  res.render('posts/add', {title: "Add Post"})
 });
 
 module.exports = router;
