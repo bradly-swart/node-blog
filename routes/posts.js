@@ -14,6 +14,15 @@ router.get('/add', function(req, res, next) {
   })
 });
 
+router.get('/show/:id', function(req, res, next) {
+  var post = db.get('posts')
+  post.findById(req.params.id, function(err, post){
+    res.render('posts/show', {
+      'post': post
+    })
+  })
+});
+
 router.post('/add', upload.single('image'), function(req, res, next) {
   var title    = req.body.title
   var category = req.body.category
