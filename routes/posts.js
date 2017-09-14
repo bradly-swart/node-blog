@@ -66,53 +66,51 @@ router.post('/add', upload.single('image'), function(req, res, next) {
   }
 });
 
-
-router.post('/addcomment', function(res, req, next) {
-  console.log(req.body)
+router.post('/addcomment', function(req, res, next) {
   var name = req.body.comment_name
-  // var email  = req.body.comment_email
-  // var body   = req.body.comment_body
-  // var postId = req.body.postId
-  // var commentDate = new Date()
+  var email  = req.body.comment_email
+  var body   = req.body.comment_body
+  var postId = req.body.postId
+  var commentDate = new Date()
   
-  // // Form field validation
-  // req.checkBody('name', 'Enter a name.').notEmpty()
-  // req.checkBody('email', 'Enter a email.').notEmpty()
-  // req.checkBody('email', 'Enter a valid email.').isEmail()
-  // req.checkBody('body', 'Enter a comment body.').notEmpty()
+  // Form field validation
+  req.checkBody('comment_name', 'Enter a name.').notEmpty()
+  req.checkBody('comment_email', 'Enter a email.').notEmpty()
+  req.checkBody('comment_email', 'Enter a valid email.').isEmail()
+  req.checkBody('comment_body', 'Enter a comment body.').notEmpty()
 
-  // var errors = req.validationErrors()
-  // if(errors){
-  //   var posts = db.get('posts')
-  //   posts.findById(postId, function(err, post) {
-  //     res.render('posts/show', {
-  //       "post": post,
-  //       "errors": errors
-  //     })
-  //   })
-  // }else{
-  //   var comment = {
-  //     "name": name,
-  //     "email": email,
-  //     "body": body,
-  //     "commentDate": commentDate
-  //   }
+  var errors = req.validationErrors()
+  var posts = db.get('posts')
+  if(errors){
+    posts.findById(postId, function(err, post) {
+      res.render('posts/show', {
+        "post": post,
+        "errors": errors
+      })
+    })
+  }else{
+    var comment = {
+      "name": name,
+      "email": email,
+      "body": body,
+      "commentDate": commentDate
+    }
 
-  //   posts.update(
-  //     {"_id": postId},
-  //     {
-  //       $push:{"comments": comment}
-  //     },
-  //     function(err, doc) {
-  //       if(err){
-  //         throw err
-  //       }else{
-  //         req.flash('success', 'Comment Added')
-  //         res.location('/posts/show'+postId)
-  //         res.redirect('/posts/show'+postId)
-  //       }
-  //   })
-  // }
+    posts.update(
+      {"_id": postId},
+      {
+        $push:{"comments": comment}
+      },
+      function(err, doc) {
+        if(err){
+          throw err
+        }else{
+          req.flash('success', 'Comment Added')
+          res.location('/posts/show/'+postId)
+          res.redirect('/posts/show/'+postId)
+        }
+    })
+  }
 })
 
 module.exports = router;
